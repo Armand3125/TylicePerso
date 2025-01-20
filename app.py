@@ -80,6 +80,20 @@ palettes_examples_6 = [
 # ====================================
 st.title("Tylice")
 
+css = """
+    <style>
+        .stRadio div [data-testid="stMarkdownContainer"] p { display: none; }
+        .radio-container { display: flex; flex-direction: column; align-items: center; margin: 10px; }
+        .color-container { display: flex; flex-direction: column; align-items: center; margin-top: 5px; }
+        .color-box { border: 3px solid black; }
+        .stColumn { padding: 0 !important; }
+        .first-box { margin-top: 15px; }
+        .percentage-container { margin-bottom: 0; }
+        .button-container { margin-bottom: 20px; }
+    </style>
+"""
+st.markdown(css, unsafe_allow_html=True)
+
 # =========================================
 # Section 1: Téléchargement de l'image
 # =========================================
@@ -153,12 +167,15 @@ if uploaded_image is not None:
         selected_color_names = []
         for i, cluster_index in enumerate(sorted_indices_pers):
             with cols_personalization[i * 2]:
+                st.markdown("<div class='color-container'>", unsafe_allow_html=True)
                 for j, color_name in enumerate(sorted_ordered_colors_by_cluster_pers[i]):
                     color_rgb = pal[color_name]
+                    margin_class = "first-box" if j == 0 else ""
                     st.markdown(
-                        f"<div style='background-color: rgb{color_rgb}; width: {rectangle_width}px; height: {rectangle_height}px; border-radius: 5px; margin-bottom: 4px;'></div>",
+                        f"<div class='color-box {margin_class}' style='background-color: rgb{color_rgb}; width: {rectangle_width}px; height: {rectangle_height}px; border-radius: 5px; margin-bottom: 4px;'></div>",
                         unsafe_allow_html=True
                     )
+                st.markdown("</div>", unsafe_allow_html=True)
 
             with cols_personalization[i * 2 + 1]:
                 selected_color_name = st.radio(
