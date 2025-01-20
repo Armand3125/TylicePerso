@@ -197,7 +197,12 @@ if uploaded_image is not None:
         new_image_pers = Image.fromarray(new_img_arr_pers.astype('uint8'))
 
         # Affichage de l'image recolorée
-        st.image(new_image_pers, caption="Image recolorée", use_container_width=True)
+        col1_pers, col2_pers, col3_pers = st.columns([1, 6, 1])
+        with col2_pers:
+            st.image(new_image_pers, use_container_width=True)
+
+        # Affichage des dimensions de l'image
+        st.markdown(f"<p style='text-align:center; font-size:16px;'><b>Dimensions : {new_width_cm} cm x {new_height_cm} cm</b></p>", unsafe_allow_html=True)
 
     # =========================================
     # Section 4: Exemples de Recoloration
