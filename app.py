@@ -97,7 +97,7 @@ st.markdown(css, unsafe_allow_html=True)
 # =========================================
 # Section 1: Téléchargement de l'image
 # =========================================
-uploaded_image = st.file_uploader("Télécharger une image", type=["jpg", "jpeg", "png"])
+uploaded_image = st.file_uploader("Télécharger une image", type=["jpg", "jpeg", "png", "webp"])
 
 # =========================================
 # Sections conditionnelles après upload d'image
@@ -109,10 +109,10 @@ if uploaded_image is not None:
     col1, col2 = st.columns([2, 5])
 
     with col1:
-        if st.button("4 Couleurs : 7.95 €", key="select_4"):
+        if st.button("4 Couleurs", key="select_4"):
             st.session_state.num_selections = 4
     with col2:
-        if st.button("6 Couleurs : 11.95 €", key="select_6"):
+        if st.button("6 Couleurs", key="select_6"):
             st.session_state.num_selections = 6
 
     # Initialisation du nombre de sélections si non défini
