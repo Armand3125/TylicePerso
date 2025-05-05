@@ -71,7 +71,7 @@ palettes_examples_4 = [
 palettes_examples_6 = [
     ["NC", "VB", "RE", "OM", "JO", "BJ"],
     ["NC", "BF", "VB", "BC", "BG", "BJ"],
-    ["NC", "VGa", "VB", "GA", "JO", "BJ"],
+    ["NC", "VGa", "MC", "GA", "JO", "BJ"],
     ["NC", "BF", "MC", "VG", "VL", "BJ"],
 ]
 
