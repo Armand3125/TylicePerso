@@ -63,15 +63,15 @@ pal = {
 # ====================================
 palettes_examples_4 = [
     ["NC", "RE", "JO", "BJ"],
-    ["NC", "BM", "BG", "BJ"],
-    ["NC", "BM", "JO", "BJ"],
+    ["NC", "BC", "BG", "BJ"],
+    ["NC", "BC", "JO", "BJ"],
     ["NC", "VB", "OM", "BJ"],
 ]
 
 palettes_examples_6 = [
     ["NC", "VB", "RE", "OM", "JO", "BJ"],
-    ["NC", "BF", "BM", "BC", "BG", "BJ"],
-    ["NC", "VGa", "BM", "GA", "JO", "BJ"],
+    ["NC", "BF", "VB", "BC", "BG", "BJ"],
+    ["NC", "VGa", "VB", "GA", "JO", "BJ"],
     ["NC", "BF", "MC", "VG", "VL", "BJ"],
 ]
 
