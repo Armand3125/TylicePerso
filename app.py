@@ -63,7 +63,7 @@ pal = {
 # Listes de palettes fixes pour les Exemples
 # ====================================
 palettes_examples_4 = [
-    ["NC", "RE", "JO", "BJ"],
+    ["NC", "BO", "JO", "BJ"],
     ["NC", "BC", "BG", "BJ"],
     ["NC", "BC", "JO", "BJ"],
     ["NC", "VB", "OM", "BJ"],
