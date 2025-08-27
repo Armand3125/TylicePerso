@@ -68,7 +68,7 @@ pal = {
 # ====================================
 # Palettes de 4 couleurs
 palettes_examples_4 = [
-    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BlancJade"],
+    ["NoirCharbon", "BleuFonce", "VioletBasic", "BlancJade"],  # Première palette modifiée
     ["NoirCharbon", "VioletBasic", "VioletLila", "BlancJade"],
     ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],
     ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],
@@ -76,11 +76,12 @@ palettes_examples_4 = [
 
 # Palettes de 6 couleurs
 palettes_examples_6 = [
-    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],
-    ["NoirCharbon", "VioletBasic", "VioletLila", "VioletMagenta", "RougeEcarlate", "BlancJade"],
-    ["NoirCharbon", "BrunDesert", "BrunLin", "MarronChocolat", "TerraCotta", "BlancJade"],
-    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],
+    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  # Palette conservée
+    ["NoirCharbon", "OrangeMandarine", "JauneOr", "VioletLila", "VertGui", "BlancJade"],  # Nouvelle palette
+    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  # Modifiée selon ta demande
+    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  # Palette conservée
 ]
+
 
 
 
