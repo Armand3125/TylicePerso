@@ -67,9 +67,9 @@ pal = {
 # Listes de palettes fixes pour les Exemples
 # ====================================
 palettes_examples_4 = [
-    ["NoirCharbon", "TerraCotta", "VertHerbe", "BlancJade"],
-    ["NoirCharbon", "BleuCobalt", "BleuCyan", "BlancJade"],
-    ["NoirCharbon", "RougeEcarlate", "JauneTournesol", "BlancJade"],
+    ["NoirCharbon", "TerraCotta", "JauneOr", "BlancJade"],
+    ["NoirCharbon", "BleuCyan", "BleuGlacier", "BlancJade"],
+    ["NoirCharbon", "RougeFonce", "JauneTournesol", "BlancJade"],
     ["NoirCharbon", "VioletBasic", "OrangeMandarine", "BlancJade"],
 ]
 
