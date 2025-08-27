@@ -80,7 +80,7 @@ palettes_examples_6 = [
     ["NoirCharbon", "BleuFonce", "BleuCobalt", "VertHerbe", "BleuGlacier", "BlancJade"],  
     ["NoirCharbon", "RougeFonce", "RougeEcarlate", "OrangeMandarine", "JauneTournesol", "BlancJade"],  
     ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunDesert", "BrunLin", "BlancJade"],  
-    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  
+    ["NoirCharbon", "VertGalalxie", "VertGui", "JauneTournesol", "VertHerbe", "BlancJade"],  
 ]
 
 
