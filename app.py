@@ -66,7 +66,7 @@ pal = {
 # ====================================
 # Listes de palettes fixes pour les Exemples
 # ====================================
-# Palettes de 4 couleurs
+
 # Palettes de 4 couleurs
 palettes_examples_4 = [
     ["NoirCharbon", "TerraCotta", "OrangeMandarine", "BlancJade"],
