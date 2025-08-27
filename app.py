@@ -77,9 +77,9 @@ palettes_examples_4 = [
 
 # Palettes de 6 couleurs
 palettes_examples_6 = [
-    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  
+    ["NoirCharbon", "BleuFonce", "BleuCobalt", "VertHerbe", "BleuGlacier", "BlancJade"],  
     ["NoirCharbon", "RougeFonce", "RougeEcarlate", "OrangeMandarine", "JauneTournesol", "BlancJade"],  
-    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  
+    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunDesert", "BrunLin", "BlancJade"],  
     ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  
 ]
 
