@@ -69,22 +69,19 @@ pal = {
 # Palettes de 4 couleurs
 # Palettes de 4 couleurs
 palettes_examples_4 = [
-    ["NoirCharbon", "VioletMagenta", "OrangeMandarine", "BlancJade"],  # Nouvelle combinaison sans BleuFoncé
-    ["NoirCharbon", "VertGui", "GrisCendre", "BlancJade"],  # Nouvelle combinaison sans BleuFoncé et des couleurs uniques
-    ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],  # Palette déjà validée
-    ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],  # Palette déjà validée
+    ["NoirCharbon", "TerraCotta", "OrangeMandarine", "BlancJade"],
+    ["NoirCharbon", "VioletBasique", "VioletLila", "BlancJade"], 
+    ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],  
+    ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],  
 ]
 
 # Palettes de 6 couleurs
 palettes_examples_6 = [
-    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  # Palette déjà validée
-    ["NoirCharbon", "RougeEcarlate", "VioletMagenta", "VioletLila", "JauneTournesol", "BlancJade"],  # Nouvelle palette triée
-    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  # Palette déjà validée
-    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  # Palette déjà validée
+    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  
+    ["NoirCharbon", "RougeEcarlate", "VioletMagenta", "VioletLila", "JauneTournesol", "BlancJade"],  
+    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  
+    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  
 ]
-
-
-
 
 
 # ====================================
