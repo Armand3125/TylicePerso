@@ -48,19 +48,19 @@ def recolor_image(img_arr, labels, sorted_indices, palette_colors):
 # Dictionnaire des couleurs
 # =========================
 pal = {
-    "NC": (0, 0, 0), "BJ": (255, 255, 255),
-    "JO": (228, 189, 104), "BC": (0, 134, 214),
-    "VL": (174, 150, 212), "VG": (63, 142, 67),
-    "RE": (222, 67, 67), "VH": (97, 198, 128),
-    "OM": (249, 153, 99), "VGa": (59, 102, 94),
-    "BG": (163, 216, 225), "VM": (236, 0, 140),
-    "BCl": (204, 153, 102), "VB": (94, 67, 183),
-    "BF": (4, 47, 86), "MC": (125, 101, 86),
-    "BL": (211, 183, 167), "TC": (177, 85, 51),
-    "BCo": (0,71,171), "VV": (0,255,0),
-    "GC": (140,140,140), "GB": (169,169,169),
-    "BO": (242,241,230), "JT": (255,204,0),
-    "BT": (0,255,255), "GB": (204,0,0),
+    "NoirCharbon": (0, 0, 0), "BlancJade": (255, 255, 255),
+    "JauneOr": (228, 189, 104), "BleuCyan": (0, 134, 214),
+    "VioletLila": (174, 150, 212), "VertGui": (63, 142, 67),
+    "RougeEcarlate": (222, 67, 67), "VertHerbe": (97, 198, 128),
+    "OrangeMandarine": (249, 153, 99), "VertGalalxie": (59, 102, 94),
+    "BleuGlacier": (163, 216, 225), "VioletMagenta": (236, 0, 140),
+    "BrunLin": (204, 153, 102), "VioletBasic": (94, 67, 183),
+    "BleuFonce": (4, 47, 86), "MarronChocolat": (125, 101, 86),
+    "BrunLin": (211, 183, 167), "TerraCotta": (177, 85, 51),
+    "BleuCobalt": (0,71,171), "VertVif": (0,255,0),
+    "GrisCendre": (140,140,140), "GrisBasic": (169,169,169),
+    "BlancOs": (242,241,230), "JauneTournesol": (255,204,0),
+    "BleuTurquoise": (0,255,255), "RougeFonce": (204,0,0),
 }
 
 # ====================================
