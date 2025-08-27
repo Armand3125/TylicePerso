@@ -66,19 +66,22 @@ pal = {
 # ====================================
 # Listes de palettes fixes pour les Exemples
 # ====================================
-palettes_4 = [
+# Palettes de 4 couleurs
+palettes_examples_4 = [
     ["NoirCharbon", "BleuFonce", "TerraCotta", "BlancJade"],
     ["NoirCharbon", "VioletBasic", "BrunDesert", "BlancJade"],
     ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],
     ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],
 ]
 
-palettes_6 = [
+# Palettes de 6 couleurs
+palettes_examples_6 = [
     ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],
     ["NoirCharbon", "VioletBasic", "VioletLila", "VioletMagenta", "RougeEcarlate", "BlancJade"],
     ["NoirCharbon", "BrunDesert", "BrunLin", "MarronChocolat", "TerraCotta", "BlancJade"],
     ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],
 ]
+
 
 # ====================================
 # Configuration du titre et du style
