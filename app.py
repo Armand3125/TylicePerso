@@ -69,10 +69,10 @@ pal = {
 
 # Palettes de 4 couleurs
 palettes_examples_4 = [
-    ["NoirCharbon", "TerraCotta", "BleuGlacier", "BlancJade"],
+    ["NoirCharbon", "TerraCotta", "BleuCyan", "BlancJade"],
     ["NoirCharbon", "VioletBasique", "VioletLila", "BlancJade"], 
     ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],  
-    ["NoirCharbon", "RougeEcarlate", "JauneTournesol", "BlancJade"],  
+    ["NoirCharbon", "RougeFonce", "JauneTournesol", "BlancJade"],  
 ]
 
 # Palettes de 6 couleurs
