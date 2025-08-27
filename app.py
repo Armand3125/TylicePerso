@@ -54,7 +54,7 @@ pal = {
     "RougeEcarlate": (222, 67, 67), "VertHerbe": (97, 198, 128),
     "OrangeMandarine": (249, 153, 99), "VertGalalxie": (59, 102, 94),
     "BleuGlacier": (163, 216, 225), "VioletMagenta": (236, 0, 140),
-    "BrunDesert": (204, 153, 102), "VioletBasic": (94, 67, 183),
+    "BrunDesert": (204, 153, 102), "VioletBasique": (94, 67, 183),
     "BleuFonce": (4, 47, 86), "MarronChocolat": (125, 101, 86),
     "BrunLin": (211, 183, 167), "TerraCotta": (177, 85, 51),
     "BleuCobalt": (0,71,171), "VertVif": (0,255,0),
