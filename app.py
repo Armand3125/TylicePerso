@@ -67,20 +67,22 @@ pal = {
 # Listes de palettes fixes pour les Exemples
 # ====================================
 # Palettes de 4 couleurs
+# Palettes de 4 couleurs
 palettes_examples_4 = [
-    ["NoirCharbon", "BleuFonce", "VioletBasic", "BlancJade"],  # Première palette modifiée
-    ["NoirCharbon", "VioletBasic", "VioletLila", "BlancJade"],
-    ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],
-    ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],
+    ["NoirCharbon", "VioletMagenta", "OrangeMandarine", "BlancJade"],  # Nouvelle combinaison sans BleuFoncé
+    ["NoirCharbon", "VertGui", "GrisCendre", "BlancJade"],  # Nouvelle combinaison sans BleuFoncé et des couleurs uniques
+    ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],  # Palette déjà validée
+    ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],  # Palette déjà validée
 ]
 
 # Palettes de 6 couleurs
 palettes_examples_6 = [
-    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  # Palette conservée
-    ["NoirCharbon", "OrangeMandarine", "JauneOr", "VioletLila", "VertGui", "BlancJade"],  # Nouvelle palette
-    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  # Modifiée selon ta demande
-    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  # Palette conservée
+    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],  # Palette déjà validée
+    ["NoirCharbon", "RougeEcarlate", "VioletMagenta", "VioletLila", "JauneTournesol", "BlancJade"],  # Nouvelle palette triée
+    ["NoirCharbon", "MarronChocolat", "TerraCotta", "BrunLin", "BrunDesert", "BlancJade"],  # Palette déjà validée
+    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],  # Palette déjà validée
 ]
+
 
 
 
