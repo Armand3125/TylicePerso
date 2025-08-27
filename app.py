@@ -66,18 +66,18 @@ pal = {
 # ====================================
 # Listes de palettes fixes pour les Exemples
 # ====================================
-palettes_examples_4 = [
-    ["NoirCharbon", "TerraCotta", "JauneOr", "BlancJade"],
-    ["NoirCharbon", "BleuCyan", "BleuGlacier", "BlancJade"],
-    ["NoirCharbon", "RougeFonce", "JauneTournesol", "BlancJade"],
-    ["NoirCharbon", "VioletBasic", "OrangeMandarine", "BlancJade"],
+palettes_4 = [
+    ["NoirCharbon", "BleuFonce", "TerraCotta", "BlancJade"],
+    ["NoirCharbon", "VioletBasic", "BrunDesert", "BlancJade"],
+    ["NoirCharbon", "VertGalalxie", "VertHerbe", "BlancJade"],
+    ["NoirCharbon", "RougeEcarlate", "JauneOr", "BlancJade"],
 ]
 
-palettes_examples_6 = [
-    ["NC", "VB", "RE", "OM", "JO", "BJ"],
-    ["NC", "BF", "VB", "BC", "BG", "BJ"],
-    ["NC", "VGa", "MC", "GA", "JO", "BJ"],
-    ["NC", "MC", "TC", "OM", "BL", "BJ"],
+palettes_6 = [
+    ["NoirCharbon", "BleuFonce", "BleuCobalt", "BleuGlacier", "VertHerbe", "BlancJade"],
+    ["NoirCharbon", "VioletBasic", "VioletLila", "VioletMagenta", "RougeEcarlate", "BlancJade"],
+    ["NoirCharbon", "BrunDesert", "BrunLin", "MarronChocolat", "TerraCotta", "BlancJade"],
+    ["NoirCharbon", "VertGalalxie", "VertGui", "VertHerbe", "JauneTournesol", "BlancJade"],
 ]
 
 # ====================================
