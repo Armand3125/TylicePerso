@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#8d3a78" />
+  <title>Le Défi du professeur</title>
+  <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="connect-wrap" id="connectScreen">
+    <div class="card connect-card">
+      <h1>Le Défi du professeur 💜</h1>
+      <p class="subtitle">Entre le code donné par ton professeur pour commencer.</p>
+      <div class="connect-form">
+        <input id="sessionCode" type="text" maxlength="8" placeholder="CODE" autocomplete="off" />
+        <button class="primary" id="connectButton" onclick="startConnection()">Se connecter</button>
+      </div>
+      <div class="connection-state" id="connectionState"><span class="dot"></span>En attente du code</div>
+    </div>
+  </section>
+
+  <main class="layout hidden" id="gameShell">
+    <section class="app">
+      <header>
+        <h1>Le Défi du professeur 💜</h1>
+        <p class="subtitle">Français A1 — marca una sola respuesta por pregunta.</p>
+        <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+        <div class="page-counter" id="pageCounter">Página 1 de 10</div>
+      </header>
+      <section class="card" id="quiz"></section>
+      <section class="card" id="result">
+        <h2>Défi terminé</h2>
+        <p class="final-meta" id="resultMessage"></p>
+        <div class="suggestive-scene" aria-label="Animation romantique et suggestive">
+          <div class="moon"></div><div class="heart-pop">♥</div>
+          <div class="bed"><div class="headboard"></div><div class="mattress"></div><div class="pillow one"></div><div class="pillow two"></div><div class="bump one"></div><div class="bump two"></div><div class="blanket"></div></div>
+        </div>
+        <div class="proud">Je suis fier de toi 💜</div>
+      </section>
+    </section>
+    <aside class="intensity-panel" aria-live="polite">
+      <div class="intensity-head"><h2>Nivel del juego</h2><div class="level-number"><span id="levelValue">1</span> / 10</div><div class="level-status" id="levelStatus">Solo teasing</div></div>
+      <div class="meter-area"><div class="meter-labels" aria-hidden="true"><span class="meter-label" style="bottom:91%">Fuerte</span><span class="meter-label" style="bottom:71%">Medio</span><span class="meter-label" style="bottom:51%">Suave</span><span class="meter-label" style="bottom:31%">Intenso</span><span class="meter-label" style="bottom:10%">Teasing</span></div><div class="meter-track"><div class="meter-fill" id="meterFill"></div><div class="meter-marker" id="meterMarker"></div></div></div>
+      <div class="delta" id="levelDelta"></div>
+      <div class="legend"><div><strong>0–2 :</strong> teasing</div><div><strong>3–4 :</strong> teasing intenso</div><div><strong>5–6 :</strong> vibración suave</div><div><strong>7–8 :</strong> vibración media</div><div><strong>9–10 :</strong> vibración fuerte</div></div>
+      <details class="mobile-levels"><summary>Ver los niveles</summary><div><span><b>0–2:</b> teasing</span><span><b>3–4:</b> intenso</span><span><b>5–6:</b> suave</span><span><b>7–8:</b> media</span><span><b>9–10:</b> fuerte</span></div></details>
+    </aside>
+  </main>
+
+  <div class="modal-overlay" id="waitingModal" role="dialog" aria-modal="true"><div class="modal-card waiting-card"><div class="spinner"></div><h2>Le professeur vérifie tes réponses…</h2><p>Attends sa validation pour recevoir la suite.</p><p class="connection-state" id="waitingConnection"></p></div></div>
+  <div class="modal-overlay" id="feedbackModal" role="dialog" aria-modal="true" aria-labelledby="feedbackTitle"><div class="modal-card"><div id="modalContent"></div><div class="modal-actions"><button class="primary" onclick="closeFeedbackAndContinue()">Continuer</button></div></div></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
