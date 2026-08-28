@@ -81,13 +81,104 @@ const pages = [
     ]
   },
   {
-    title: "Página 10 — Comprensión final",
-    intro: "Una última lectura antes de terminar el desafío.",
-    reading: "Ce soir, Ailin et Armand ont rendez-vous en vidéo. Ils parlent de leur journée, rient et se disent des mots doux. Ensuite, ils jouent en français. Armand valide chaque page en direct avant de passer à la suivante. Quand Ailin réussit une page parfaite, la récompense alterne : une photo d’Armand, puis un ordre à lui donner.",
+    title: "Página 10 — Comprensión",
+    intro: "Una lectura antes de pasar al nivel siguiente.",
+    reading: "Ce soir, Ailin et Armand ont rendez-vous en vidéo. Ils parlent de leur journée, rient et se disent des mots doux. Ensuite, ils jouent en français. Chaque page est corrigée en direct avant de passer à la suivante.",
     questions: [
       { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "28. Comment est leur rendez-vous ?", options: ["Au restaurant", "À l’école", "En vidéo"], answer: 2 },
-      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "29. Qui valide chaque page ?", options: ["Armand", "Le téléphone", "Le restaurant"], answer: 0 },
-      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "30. Que peut gagner Ailin après une page parfaite ?", options: ["Une photo ou le droit de donner un ordre", "Un billet d’avion", "Un nouveau téléphone"], answer: 0 }
+      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "29. Que font-ils avant de jouer ?", options: ["Ils parlent de leur journée", "Ils prennent l’avion", "Ils dorment"], answer: 0 },
+      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "30. Quand la page suivante apparaît-elle ?", options: ["Avant les réponses", "Après la correction", "Le lendemain"], answer: 1 }
+    ]
+  },
+  {
+    title: "Página 11 — Pronombres y cercanía",
+    intro: "Ahora usamos pronombres para hablar de gestos y cercanía con más naturalidad.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "31. Quand tu m’embrasses dans le cou, j’___ pense encore après.", options: ["en", "y", "le"], answer: 1 },
+      { instruction: "Elige la frase correcta.", prompt: "32. « Je veux te dire ce qui me plaît. »", options: ["Je veux le te dire.", "Je veux te le dire.", "Je te veux le dire."], answer: 1 },
+      { instruction: "Completa la frase.", prompt: "33. Cette façon de me regarder, je ___ adore.", options: ["la", "lui", "y"], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 12 — El condicional del deseo",
+    intro: "Expresar deseos íntimos de forma más matizada con el conditionnel.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "34. J’___ que tu sois ici avec moi ce soir.", options: ["aimerais", "aimerai", "aimais"], answer: 0 },
+      { instruction: "Elige la traducción correcta.", prompt: "35. « Me gustaría besarte lentamente. »", options: ["Je voudrais t’embrasser doucement.", "Je vais t’embrassais doucement.", "Je voudrais que je t’embrasse hier."], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "36. Tu ___ me dire ce que tu veux vraiment ?", options: ["pourrais", "pourras", "pouvais"], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 13 — Recuerdos íntimos",
+    intro: "Combinar passé composé e imparfait para contar un recuerdo cercano.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "37. Hier, pendant que nous ___ en vidéo, tu m’as fait rougir.", options: ["parlions", "avons parlé", "parlerons"], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "38. Quand tu ___ ma robe, j’ai souri.", options: ["as complimenté", "complimentais toujours", "complimenteras"], answer: 0 },
+      { instruction: "Elige la frase más natural.", prompt: "39. Pour raconter une ambiance qui durait :", options: ["La lumière était douce.", "La lumière a été douce chaque seconde.", "La lumière sera douce hier."], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 14 — Qui, que, dont",
+    intro: "Describir a la otra persona y lo que te atrae con pronombres relativos.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "40. La façon ___ tu me regardes me déstabilise.", options: ["qui", "dont", "où"], answer: 1 },
+      { instruction: "Completa la frase.", prompt: "41. Le baiser ___ tu m’as donné m’a surprise.", options: ["que", "qui", "dont"], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "42. J’aime les mots ___ me font rougir.", options: ["que", "qui", "dont"], answer: 1 }
+    ]
+  },
+  {
+    title: "Página 15 — Deseo y subjuntivo",
+    intro: "Expresar deseos, preferencias y límites avec le subjonctif.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "43. Je veux que tu me ___ ce qui te plaît.", options: ["dises", "dis", "diras"], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "44. Je préfère que tu ___ plus doux avec moi.", options: ["es", "sois", "seras"], answer: 1 },
+      { instruction: "Completa la frase.", prompt: "45. J’aime que tu me ___ avant d’aller plus loin.", options: ["demandes", "demanderas", "demandais"], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 16 — Órdenes y pronombres",
+    intro: "Comprender instrucciones directas y colocar bien los pronombres.",
+    questions: [
+      { instruction: "Elige la forma correcta.", prompt: "46. À l’impératif affirmatif :", options: ["Regarde-moi.", "Me regarde.", "Moi regarde."], answer: 0 },
+      { instruction: "Elige la forma correcta.", prompt: "47. À l’impératif négatif :", options: ["Ne me quitte pas des yeux.", "Ne quitte-moi pas des yeux.", "Me ne quitte pas des yeux."], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "48. Dis-___ ce que tu veux que je fasse.", options: ["moi", "me", "je"], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 17 — Si estuvieras aquí",
+    intro: "Construir hipótesis íntimas con si + imparfait y conditionnel.",
+    questions: [
+      { instruction: "Completa la frase.", prompt: "49. Si tu ___ ici, je t’embrasserais tout de suite.", options: ["étais", "serais", "es"], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "50. Si nous étions seuls, je te ___ ce que j’ai en tête.", options: ["dirais", "disais", "dirai"], answer: 0 },
+      { instruction: "Elige la frase correcta.", prompt: "51. Hipótesis irreal en el presente :", options: ["Si tu venais, je serais très heureuse.", "Si tu viendrais, je serais très heureuse.", "Si tu viens hier, je suis heureuse."], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 18 — Límites y consentimiento",
+    intro: "Hablar de deseo también significa saber expresar límites con precisión.",
+    questions: [
+      { instruction: "Elige la traducción correcta.", prompt: "52. « Si algo no te gusta, dímelo. »", options: ["Si quelque chose ne te plaît pas, dis-le-moi.", "Si quelque chose ne plaît, me dis.", "Si tu n’aimes pas, dis-moi le hier."], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "53. Je veux que tu t’arrêtes dès que je te le ___.", options: ["demande", "demander", "demandais de"], answer: 0 },
+      { instruction: "Elige la frase más natural.", prompt: "54. Para preguntar antes de continuar :", options: ["Tu veux que je continue ?", "Tu veux je continue ?", "Est-ce tu veux que continuer ?"], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 19 — Matices del deseo",
+    intro: "Elegir expresiones más naturales para hablar de atracción y tensión.",
+    questions: [
+      { instruction: "Elige la frase más natural.", prompt: "55. « Me vuelves loca cuando me miras así. »", options: ["Tu me rends folle quand tu me regardes comme ça.", "Tu fais moi folle quand regardes ça.", "Je deviens toi folle comme regard."], answer: 0 },
+      { instruction: "Completa la frase.", prompt: "56. Plus tu t’approches, plus j’___ envie de t’embrasser.", options: ["ai", "suis", "fais"], answer: 0 },
+      { instruction: "Elige la traducción correcta.", prompt: "57. « No puedo dejar de pensar en ti. »", options: ["Je n’arrive pas à arrêter de penser à toi.", "Je ne peux penser toi jamais.", "Je n’arrête pas te penser de."], answer: 0 }
+    ]
+  },
+  {
+    title: "Página 20 — Comprensión avanzada",
+    intro: "Última lectura : intención, deseo, confianza y comunicación.",
+    reading: "Pendant leur appel, Ailin dit à Armand qu’elle aime quand il prend l’initiative, mais qu’elle veut toujours pouvoir lui dire de ralentir ou de s’arrêter. Armand lui répond qu’il préfère qu’elle dise clairement ce qu’elle veut. Ils décident alors de continuer le jeu en se donnant chacun leur tour une consigne en français, sans jamais oublier de vérifier que l’autre est à l’aise.",
+    questions: [
+      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "58. Qu’est-ce qu’Ailin apprécie ?", options: ["Qu’Armand prenne parfois l’initiative", "Qu’Armand ne lui parle jamais", "Que le jeu s’arrête immédiatement"], answer: 0 },
+      { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "59. Que veut Armand ?", options: ["Qu’elle dise clairement ce qu’elle veut", "Qu’elle ne réponde plus", "Qu’elle parle uniquement espagnol"], answer: 0 },
+      { instruction: "Lee el texto y elige la réponse correcte.", prompt: "60. Quelle règle gardent-ils pendant le jeu ?", options: ["Vérifier que l’autre est à l’aise", "Ne jamais changer de sujet", "Toujours parler très vite"], answer: 0 }
     ]
   }
 ];
@@ -100,26 +191,15 @@ const bonuses = [
   "Je veux m’asseoir sur ton visage."
 ];
 
-const gages = [
-  "Répète les trois bonnes réponses en disant « Monsieur le professeur ».",
-  "Attends une minute sans te toucher, puis demande la permission en français.",
-  "Dis trois fois : « Je vais être une élève très sage. »",
-  "Décris en une phrase française la récompense que tu veux gagner.",
-  "Reste immobile pendant trente secondes avant la prochaine question."
-];
-
 let currentPage = 0;
 let activeBonus = null;
-let pendingSubmission = null;
-let pendingContinue = null;
-let pendingAdjustment = 0;
 
 const answers = {};
 const bonusAnswers = {};
 const pageScores = Array(pages.length).fill(null);
 const bonusValidated = Array(bonuses.length).fill(false);
-const professorAdjustments = [];
 const quiz = document.getElementById("quiz");
+const totalSteps = pages.length + bonuses.length;
 
 function clampLevel(value) {
   return Math.max(0, Math.min(10, value));
@@ -129,7 +209,6 @@ function baseDeltaValue(kind, score) {
   if (kind === "bonus") return 0.5;
   if (score === 3) return 1;
   if (score === 2) return 0.5;
-  if (score === 0) return -0.5;
   return 0;
 }
 
@@ -138,13 +217,9 @@ function getGameLevel() {
   pageScores.forEach((score) => {
     if (score === 3) level += 1;
     else if (score === 2) level += 0.5;
-    else if (score === 0) level -= 0.5;
   });
   bonusValidated.forEach((ok) => {
     if (ok) level += 0.5;
-  });
-  professorAdjustments.forEach((adjustment) => {
-    level += adjustment;
   });
   return clampLevel(level);
 }
@@ -191,7 +266,7 @@ function updateIntensity(deltaText = "") {
 }
 
 function quizStepIndex(pageIndex) {
-  return pageIndex + Math.floor(pageIndex / 2);
+  return pageIndex + Math.min(Math.floor(pageIndex / 2), bonuses.length);
 }
 
 function bonusStepIndex(bonusIndex) {
@@ -199,7 +274,7 @@ function bonusStepIndex(bonusIndex) {
 }
 
 function updateProgress(stepIndex, label) {
-  document.getElementById("progress").style.width = `${((stepIndex + 1) / 15) * 100}%`;
+  document.getElementById("progress").style.width = `${((stepIndex + 1) / totalSteps) * 100}%`;
   document.getElementById("pageCounter").textContent = label;
 }
 
@@ -248,22 +323,45 @@ function hideWarning() {
   if (warning) warning.style.display = "none";
 }
 
-function perfectReward() {
-  const previousPerfectPages = pageScores.filter((score) => score === 3).length;
-  return previousPerfectPages % 2 === 0
-    ? { type: "photo", text: "Tu as gagné une photo d’Armand 📸" }
-    : { type: "order", text: "Tu peux donner un ordre à Armand 😈" };
+function disableCurrentForm() {
+  document.querySelectorAll("#quiz input, #quiz button").forEach((element) => {
+    element.disabled = true;
+  });
+}
+
+function appendInlineFeedback(html, success = false) {
+  const old = document.getElementById("inlineFeedback");
+  if (old) old.remove();
+  const feedback = document.createElement("div");
+  feedback.id = "inlineFeedback";
+  feedback.setAttribute("aria-live", "polite");
+  feedback.style.marginTop = "18px";
+  feedback.style.padding = "16px";
+  feedback.style.borderRadius = "14px";
+  feedback.style.border = success ? "1px solid #b9e2c8" : "1px solid #efb7c0";
+  feedback.style.background = success ? "#edf9f1" : "#fff0f2";
+  feedback.style.color = success ? "#187847" : "#b52d42";
+  feedback.innerHTML = html;
+  quiz.appendChild(feedback);
+  feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function deltaLabel(kind, score) {
+  const value = baseDeltaValue(kind, score);
+  if (!value) return "Pas d’augmentation";
+  return `${formatSigned(value)} point${Math.abs(value) > 1 ? "s" : ""}`;
 }
 
 function submitCurrentPage() {
-  const start = currentPage * 3;
+  const submittedPage = currentPage;
+  const start = submittedPage * 3;
   if (![0, 1, 2].every((offset) => answers[start + offset] !== undefined)) {
     document.getElementById("validationWarning").style.display = "block";
     return;
   }
 
   let score = 0;
-  const details = pages[currentPage].questions.map((question, index) => {
+  const details = pages[submittedPage].questions.map((question, index) => {
     const selectedIndex = answers[start + index];
     const isCorrect = selectedIndex === question.answer;
     if (isCorrect) score += 1;
@@ -276,139 +374,53 @@ function submitCurrentPage() {
     };
   });
 
-  const reward = score === 3 ? perfectReward() : null;
-  pendingSubmission = {
-    kind: "quiz",
-    pageIndex: currentPage,
-    score,
-    details,
-    reward,
-    gage: score === 0 ? gages[currentPage % gages.length] : null
-  };
+  pageScores[submittedPage] = score;
+  disableCurrentForm();
+  const delta = deltaLabel("quiz", score);
+  updateIntensity(delta);
 
-  pageScores[currentPage] = score;
-  pendingAdjustment = 0;
-  pendingContinue = () => continueAfterPage(currentPage);
-  showQuizFeedback(pendingSubmission);
+  const mistakes = details.filter((detail) => !detail.isCorrect);
+  if (mistakes.length === 0) {
+    appendInlineFeedback(`<div style="font-size:1.15rem;font-weight:900">Félicitations 💜 — 3/3</div><div style="margin-top:5px">${delta}</div>`, true);
+    setTimeout(() => continueAfterPage(submittedPage), 2200);
+    return;
+  }
+
+  const mistakesHtml = mistakes.map((detail) => `
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(181,45,66,.18)">
+      <div style="font-weight:850">${detail.prompt}</div>
+      <div style="margin-top:4px"><strong>Ta réponse :</strong> « ${detail.selected} »</div>
+      <div style="margin-top:3px"><strong>Bonne réponse :</strong> « ${detail.correct} »</div>
+    </div>`).join("");
+
+  appendInlineFeedback(`<div style="font-size:1.05rem;font-weight:900">${mistakes.length} erreur${mistakes.length > 1 ? "s" : ""} — ${score}/3 · ${delta}</div>${mistakesHtml}`, false);
+  setTimeout(() => continueAfterPage(submittedPage), 4200);
 }
 
 function submitBonus() {
-  if (bonusAnswers[activeBonus] === undefined) {
+  const submittedBonus = activeBonus;
+  if (bonusAnswers[submittedBonus] === undefined) {
     document.getElementById("validationWarning").style.display = "block";
     return;
   }
 
-  pendingSubmission = {
-    kind: "bonus",
-    bonusIndex: activeBonus,
-    statement: bonuses[activeBonus],
-    answer: bonusAnswers[activeBonus]
-  };
-
-  bonusValidated[activeBonus] = true;
-  pendingAdjustment = 0;
-  pendingContinue = () => continueAfterBonus(activeBonus);
-  showBonusFeedback(pendingSubmission);
-}
-
-function baseDeltaLabel(kind, score) {
-  const base = baseDeltaValue(kind, score);
-  if (!base) return "Sans changement";
-  return `${formatSigned(base)} point${Math.abs(base) > 1 ? "s" : ""}`;
-}
-
-function adjustmentControlsHtml() {
-  return `
-    <div style="margin-top:18px;padding:14px;border:1px solid #dccde0;border-radius:14px;background:#fbf7fc">
-      <div style="font-weight:850;margin-bottom:5px;color:var(--accent)">Ajustement du professeur</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
-        <button type="button" class="secondary local-adjustment" data-adjustment="-1" onclick="setLocalAdjustment(-1)">−1</button>
-        <button type="button" class="secondary local-adjustment active-adjustment" data-adjustment="0" onclick="setLocalAdjustment(0)">Aucun</button>
-        <button type="button" class="secondary local-adjustment" data-adjustment="1" onclick="setLocalAdjustment(1)">+1</button>
-      </div>
-      <p id="adjustmentPreview" style="margin:10px 0 0;color:var(--muted)">Niveau après validation : <strong>${formatLevel(getGameLevel())}/10</strong></p>
-    </div>`;
-}
-
-function setLocalAdjustment(value) {
-  pendingAdjustment = [-1, 0, 1].includes(Number(value)) ? Number(value) : 0;
-  document.querySelectorAll(".local-adjustment").forEach((button) => {
-    const active = Number(button.dataset.adjustment) === pendingAdjustment;
-    button.classList.toggle("active-adjustment", active);
-    button.style.outline = active ? "2px solid var(--accent)" : "none";
-    button.style.background = active ? "#f8e8f2" : "";
-  });
-  const preview = document.getElementById("adjustmentPreview");
-  if (preview) {
-    const previewLevel = clampLevel(getGameLevel() + pendingAdjustment);
-    const label = pendingAdjustment === 0 ? "Aucun ajustement" : `Ajustement ${formatSigned(pendingAdjustment)}`;
-    preview.innerHTML = `${label} — niveau après validation : <strong>${formatLevel(previewLevel)}/10</strong>`;
-  }
-}
-
-function showQuizFeedback(submission) {
-  const mistakes = submission.details.filter((detail) => !detail.isCorrect);
-  let content = "";
-
-  if (mistakes.length === 0) {
-    content = `
-      <h2 id="feedbackTitle">Parfait 💜</h2>
-      <p class="perfect">Aucune faute sur cette page.</p>
-      <p><strong>${submission.reward.text}</strong></p>`;
-  } else {
-    const mistakesHtml = mistakes.map((detail) => `
-      <article style="margin-bottom:14px;padding:14px;border-radius:12px;background:var(--bad-soft);border:1px solid #f0c4cb">
-        <div style="font-weight:850;margin-bottom:9px;color:var(--ink)">${detail.prompt}</div>
-        <div style="color:var(--bad);margin-bottom:6px"><strong>Ta réponse :</strong> « ${detail.selected} »</div>
-        <div style="color:var(--good);font-weight:800"><strong>Bonne réponse :</strong> « ${detail.correct} »</div>
-      </article>`).join("");
-    content = `
-      <h2 id="feedbackTitle">À revoir avec le professeur</h2>
-      <p>${submission.score} / 3 — ${baseDeltaLabel("quiz", submission.score)}</p>
-      <div>${mistakesHtml}</div>
-      ${submission.gage ? `<p><strong>Gage :</strong> ${submission.gage}</p>` : ""}`;
-  }
-
-  document.getElementById("modalContent").innerHTML = `${content}${adjustmentControlsHtml()}`;
-  document.getElementById("feedbackModal").classList.add("open");
-  setLocalAdjustment(0);
-}
-
-function showBonusFeedback(submission) {
-  document.getElementById("modalContent").innerHTML = `
-    <h2 id="feedbackTitle">💜 Bonus validé</h2>
-    <p><strong>${submission.statement}</strong></p>
-    <p>Ta réponse : <strong>${submission.answer ? "Vrai" : "Faux"}</strong></p>
-    <div class="modal-delta">+0,5 point</div>
-    ${adjustmentControlsHtml()}`;
-  document.getElementById("feedbackModal").classList.add("open");
-  setLocalAdjustment(0);
-}
-
-function closeFeedbackAndContinue() {
-  document.getElementById("feedbackModal").classList.remove("open");
-  professorAdjustments.push(pendingAdjustment);
-
-  const base = pendingSubmission ? baseDeltaValue(pendingSubmission.kind, pendingSubmission.score) : 0;
-  const total = base + pendingAdjustment;
-  const deltaText = pendingAdjustment
-    ? `${formatSigned(base)} auto · ${formatSigned(pendingAdjustment)} prof · total ${formatSigned(total)}`
-    : baseDeltaLabel(pendingSubmission.kind, pendingSubmission.score);
-
-  updateIntensity(deltaText);
-  pendingAdjustment = 0;
-  pendingSubmission = null;
-
-  if (pendingContinue) {
-    const continueFunction = pendingContinue;
-    pendingContinue = null;
-    continueFunction();
-  }
+  bonusValidated[submittedBonus] = true;
+  disableCurrentForm();
+  updateIntensity("+0,5 point");
+  appendInlineFeedback(`<div style="font-size:1.1rem;font-weight:900">Bonus validé 💜 — +0,5 point</div>`, true);
+  setTimeout(() => continueAfterBonus(submittedBonus), 1800);
 }
 
 function continueAfterPage(pageIndex) {
-  if (pageIndex % 2 === 1) renderBonus(Math.floor(pageIndex / 2));
-  else if (pageIndex < pages.length - 1) {
+  if (pageIndex % 2 === 1) {
+    const bonusIndex = Math.floor(pageIndex / 2);
+    if (bonusIndex < bonuses.length) {
+      renderBonus(bonusIndex);
+      return;
+    }
+  }
+
+  if (pageIndex < pages.length - 1) {
     currentPage = pageIndex + 1;
     renderPage();
   } else {
@@ -417,11 +429,12 @@ function continueAfterPage(pageIndex) {
 }
 
 function continueAfterBonus(bonusIndex) {
-  if (bonusIndex === bonuses.length - 1) {
-    finishQuiz();
-  } else {
-    currentPage = (bonusIndex + 1) * 2;
+  const nextPage = (bonusIndex + 1) * 2;
+  if (nextPage < pages.length) {
+    currentPage = nextPage;
     renderPage();
+  } else {
+    finishQuiz();
   }
 }
 
