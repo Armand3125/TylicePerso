@@ -83,7 +83,7 @@ const pages = [
   {
     title: "Página 10 — Comprensión final",
     intro: "Una última lectura antes de terminar el desafío.",
-    reading: "Ce soir, Ailin et Armand ont rendez-vous en vidéo. Ils parlent de leur journée, rient et se disent des mots doux. Ensuite, ils jouent en français. Armand valide chaque page avant d’envoyer la suivante. Quand Ailin réussit une page parfaite, la récompense alterne : une photo d’Armand, puis un ordre à lui donner.",
+    reading: "Ce soir, Ailin et Armand ont rendez-vous en vidéo. Ils parlent de leur journée, rient et se disent des mots doux. Ensuite, ils jouent en français. Armand valide chaque page en direct avant de passer à la suivante. Quand Ailin réussit une page parfaite, la récompense alterne : une photo d’Armand, puis un ordre à lui donner.",
     questions: [
       { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "28. Comment est leur rendez-vous ?", options: ["Au restaurant", "À l’école", "En vidéo"], answer: 2 },
       { instruction: "Lee el texto y elige la respuesta correcta.", prompt: "29. Qui valide chaque page ?", options: ["Armand", "Le téléphone", "Le restaurant"], answer: 0 },
@@ -108,14 +108,11 @@ const gages = [
   "Reste immobile pendant trente secondes avant la prochaine question."
 ];
 
-let peer = null;
-let conn = null;
-let retryTimer = null;
-let sessionCode = "";
-let pendingSubmission = null;
 let currentPage = 0;
 let activeBonus = null;
+let pendingSubmission = null;
 let pendingContinue = null;
+let pendingAdjustment = 0;
 
 const answers = {};
 const bonusAnswers = {};
@@ -123,10 +120,6 @@ const pageScores = Array(pages.length).fill(null);
 const bonusValidated = Array(bonuses.length).fill(false);
 const professorAdjustments = [];
 const quiz = document.getElementById("quiz");
-
-function makeId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-}
 
 function clampLevel(value) {
   return Math.max(0, Math.min(10, value));
@@ -154,10 +147,6 @@ function getGameLevel() {
     level += adjustment;
   });
   return clampLevel(level);
-}
-
-function projectedLevel(kind, score) {
-  return clampLevel(getGameLevel() + baseDeltaValue(kind, score));
 }
 
 function formatLevel(level) {
@@ -214,102 +203,10 @@ function updateProgress(stepIndex, label) {
   document.getElementById("pageCounter").textContent = label;
 }
 
-function setConnectionState(text, status = "wait") {
-  document.getElementById("connectionState").innerHTML = `<span class="dot ${status}"></span>${text}`;
-  const waiting = document.getElementById("waitingConnection");
-  if (waiting) waiting.textContent = text;
-}
-
-function startConnection() {
-  sessionCode = document.getElementById("sessionCode").value.trim().toUpperCase().replace(/[^A-Z0-9]/g, "");
-  if (!sessionCode) {
-    setConnectionState("Entre le code du professeur", "");
-    return;
-  }
-  localStorage.setItem("defiSessionCode", sessionCode);
-  document.getElementById("connectButton").disabled = true;
-  setConnectionState("Connexion au professeur…", "wait");
-  if (peer && !peer.destroyed) peer.destroy();
-  peer = new Peer();
-  peer.on("open", () => connectToProfessor());
-  peer.on("error", () => scheduleRetry());
-  peer.on("disconnected", () => {
-    try {
-      peer.reconnect();
-    } catch (error) {
-      scheduleRetry();
-    }
-  });
-}
-
-function connectToProfessor() {
-  if (!peer || peer.destroyed || !peer.open) return;
-  if (conn && conn.open) return;
-  try {
-    conn = peer.connect(`defi-prof-${sessionCode.toLowerCase()}`, {
-      reliable: true,
-      metadata: { role: "student" }
-    });
-    conn.on("open", () => {
-      clearTimeout(retryTimer);
-      setConnectionState("Connectée au professeur", "ok");
-      document.getElementById("connectScreen").classList.add("hidden");
-      document.getElementById("gameShell").classList.remove("hidden");
-      conn.send({
-        type: "hello",
-        currentPage,
-        activeBonus,
-        level: getGameLevel(),
-        stepsCompleted: pageScores.filter((score) => score !== null).length + bonusValidated.filter(Boolean).length
-      });
-      if (pendingSubmission) conn.send(pendingSubmission);
-      if (!quiz.innerHTML) renderPage();
-    });
-    conn.on("data", handleProfessorMessage);
-    conn.on("close", () => scheduleRetry());
-    conn.on("error", () => scheduleRetry());
-  } catch (error) {
-    scheduleRetry();
-  }
-}
-
-function scheduleRetry() {
-  setConnectionState("Professeur indisponible — nouvelle tentative…", "wait");
-  document.getElementById("connectButton").disabled = false;
-  clearTimeout(retryTimer);
-  retryTimer = setTimeout(() => {
-    if (peer && peer.open) connectToProfessor();
-    else if (sessionCode) startConnection();
-  }, 3000);
-}
-
-function handleProfessorMessage(data) {
-  if (!data || typeof data !== "object") return;
-  if (data.type === "approval" && pendingSubmission && data.submissionId === pendingSubmission.submissionId) {
-    applyApproval(pendingSubmission, data);
-  }
-  if (data.type === "rejection" && pendingSubmission && data.submissionId === pendingSubmission.submissionId) {
-    pendingSubmission = null;
-    document.getElementById("waitingModal").classList.remove("open");
-    const notice = document.getElementById("reviewNotice");
-    if (notice) {
-      notice.textContent = data.message || "Le professeur te demande de vérifier tes réponses.";
-      notice.classList.remove("hidden");
-    }
-    enableCurrentForm(true);
-  }
-}
-
-function enableCurrentForm(enabled) {
-  document.querySelectorAll("#quiz input,#quiz button").forEach((element) => {
-    element.disabled = !enabled;
-  });
-}
-
 function renderPage() {
   activeBonus = null;
   const page = pages[currentPage];
-  let html = `<div class="page"><h2>${page.title}</h2><p class="page-intro">${page.intro}</p><div class="notice hidden" id="reviewNotice"></div>`;
+  let html = `<div class="page"><h2>${page.title}</h2><p class="page-intro">${page.intro}</p>`;
   if (page.reading) html += `<div class="reading">${page.reading}</div>`;
   page.questions.forEach((question, localIndex) => {
     const globalIndex = currentPage * 3 + localIndex;
@@ -320,7 +217,7 @@ function renderPage() {
     });
     html += `</div>`;
   });
-  html += `<div class="validation-warning" id="validationWarning">Responde las tres preguntas antes de continuar.</div><div class="controls"><button class="primary" onclick="submitCurrentPage()">Envoyer au professeur</button></div></div>`;
+  html += `<div class="validation-warning" id="validationWarning">Responde las tres preguntas antes de continuar.</div><div class="controls"><button class="primary" onclick="submitCurrentPage()">Valider</button></div></div>`;
   quiz.innerHTML = html;
   updateProgress(quizStepIndex(currentPage), `Página ${currentPage + 1} de ${pages.length}`);
   updateIntensity();
@@ -330,7 +227,7 @@ function renderPage() {
 function renderBonus(bonusIndex) {
   activeBonus = bonusIndex;
   const choice = bonusAnswers[bonusIndex];
-  quiz.innerHTML = `<div class="bonus-page"><span class="bonus-chip">Bonus intime ${bonusIndex + 1} / ${bonuses.length}</span><h2>Vrai ou faux ?</h2><p class="page-intro">Réponds simplement et honnêtement.</p><div class="notice hidden" id="reviewNotice"></div><div class="bonus-question"><div class="bonus-fr">${bonuses[bonusIndex]}</div><p class="bonus-points">Réponse validée : +0,5 point</p><label class="option"><input type="radio" name="bonus${bonusIndex}" value="true" ${choice === true ? "checked" : ""} onchange="saveBonusAnswer(${bonusIndex},true)"><span>Vrai</span></label><label class="option"><input type="radio" name="bonus${bonusIndex}" value="false" ${choice === false ? "checked" : ""} onchange="saveBonusAnswer(${bonusIndex},false)"><span>Faux</span></label><div class="validation-warning" id="validationWarning">Choisis Vrai ou Faux avant de continuer.</div></div><div class="controls"><button class="primary" onclick="submitBonus()">Envoyer au professeur</button></div></div>`;
+  quiz.innerHTML = `<div class="bonus-page"><span class="bonus-chip">Bonus intime ${bonusIndex + 1} / ${bonuses.length}</span><h2>Vrai ou faux ?</h2><p class="page-intro">Réponds simplement et honnêtement.</p><div class="bonus-question"><div class="bonus-fr">${bonuses[bonusIndex]}</div><p class="bonus-points">Réponse validée : +0,5 point</p><label class="option"><input type="radio" name="bonus${bonusIndex}" value="true" ${choice === true ? "checked" : ""} onchange="saveBonusAnswer(${bonusIndex},true)"><span>Vrai</span></label><label class="option"><input type="radio" name="bonus${bonusIndex}" value="false" ${choice === false ? "checked" : ""} onchange="saveBonusAnswer(${bonusIndex},false)"><span>Faux</span></label><div class="validation-warning" id="validationWarning">Choisis Vrai ou Faux avant de continuer.</div></div><div class="controls"><button class="primary" onclick="submitBonus()">Valider</button></div></div>`;
   updateProgress(bonusStepIndex(bonusIndex), `Bonus ${bonusIndex + 1} sur ${bonuses.length}`);
   updateIntensity();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -364,6 +261,7 @@ function submitCurrentPage() {
     document.getElementById("validationWarning").style.display = "block";
     return;
   }
+
   let score = 0;
   const details = pages[currentPage].questions.map((question, index) => {
     const selectedIndex = answers[start + index];
@@ -372,27 +270,26 @@ function submitCurrentPage() {
     return {
       number: start + index + 1,
       prompt: question.prompt,
-      selectedIndex,
       selected: question.options[selectedIndex],
-      correctIndex: question.answer,
       correct: question.options[question.answer],
       isCorrect
     };
   });
+
   const reward = score === 3 ? perfectReward() : null;
   pendingSubmission = {
-    type: "submission",
-    submissionId: makeId(),
     kind: "quiz",
     pageIndex: currentPage,
     score,
     details,
     reward,
-    gage: score === 0 ? gages[currentPage % gages.length] : null,
-    levelBefore: getGameLevel(),
-    levelAfter: projectedLevel("quiz", score)
+    gage: score === 0 ? gages[currentPage % gages.length] : null
   };
-  sendSubmission();
+
+  pageScores[currentPage] = score;
+  pendingAdjustment = 0;
+  pendingContinue = () => continueAfterPage(currentPage);
+  showQuizFeedback(pendingSubmission);
 }
 
 function submitBonus() {
@@ -400,114 +297,108 @@ function submitBonus() {
     document.getElementById("validationWarning").style.display = "block";
     return;
   }
+
   pendingSubmission = {
-    type: "submission",
-    submissionId: makeId(),
     kind: "bonus",
     bonusIndex: activeBonus,
     statement: bonuses[activeBonus],
-    answer: bonusAnswers[activeBonus],
-    levelBefore: getGameLevel(),
-    levelAfter: projectedLevel("bonus")
+    answer: bonusAnswers[activeBonus]
   };
-  sendSubmission();
+
+  bonusValidated[activeBonus] = true;
+  pendingAdjustment = 0;
+  pendingContinue = () => continueAfterBonus(activeBonus);
+  showBonusFeedback(pendingSubmission);
 }
 
-function sendSubmission() {
-  if (!conn || !conn.open) {
-    scheduleRetry();
-    return;
-  }
-  enableCurrentForm(false);
-  conn.send(pendingSubmission);
-  document.getElementById("waitingModal").classList.add("open");
-}
-
-function deltaLabel(kind, score, manualAdjustment = 0) {
+function baseDeltaLabel(kind, score) {
   const base = baseDeltaValue(kind, score);
-  const total = base + manualAdjustment;
-  const baseText = base === 0 ? "Sans changement automatique" : `${formatSigned(base)} point${Math.abs(base) > 1 ? "s" : ""}`;
-  if (!manualAdjustment) return baseText;
-  const professorText = `${formatSigned(manualAdjustment)} point du professeur`;
-  return `${baseText} · ${professorText} · total ${formatSigned(total)}`;
+  if (!base) return "Sans changement";
+  return `${formatSigned(base)} point${Math.abs(base) > 1 ? "s" : ""}`;
 }
 
-function applyApproval(submission, approval) {
-  pendingSubmission = null;
-  document.getElementById("waitingModal").classList.remove("open");
-  const adjustment = [-1, 0, 1].includes(Number(approval.manualAdjustment)) ? Number(approval.manualAdjustment) : 0;
-  professorAdjustments.push(adjustment);
+function adjustmentControlsHtml() {
+  return `
+    <div style="margin-top:18px;padding:14px;border:1px solid #dccde0;border-radius:14px;background:#fbf7fc">
+      <div style="font-weight:850;margin-bottom:5px;color:var(--accent)">Ajustement du professeur</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px">
+        <button type="button" class="secondary local-adjustment" data-adjustment="-1" onclick="setLocalAdjustment(-1)">−1</button>
+        <button type="button" class="secondary local-adjustment active-adjustment" data-adjustment="0" onclick="setLocalAdjustment(0)">Aucun</button>
+        <button type="button" class="secondary local-adjustment" data-adjustment="1" onclick="setLocalAdjustment(1)">+1</button>
+      </div>
+      <p id="adjustmentPreview" style="margin:10px 0 0;color:var(--muted)">Niveau après validation : <strong>${formatLevel(getGameLevel())}/10</strong></p>
+    </div>`;
+}
 
-  if (submission.kind === "bonus") {
-    bonusValidated[submission.bonusIndex] = true;
-    updateIntensity(deltaLabel("bonus", null, adjustment));
-    showBonusFeedback(submission, adjustment);
-    pendingContinue = () => continueAfterBonus(submission.bonusIndex);
-    return;
+function setLocalAdjustment(value) {
+  pendingAdjustment = [-1, 0, 1].includes(Number(value)) ? Number(value) : 0;
+  document.querySelectorAll(".local-adjustment").forEach((button) => {
+    const active = Number(button.dataset.adjustment) === pendingAdjustment;
+    button.classList.toggle("active-adjustment", active);
+    button.style.outline = active ? "2px solid var(--accent)" : "none";
+    button.style.background = active ? "#f8e8f2" : "";
+  });
+  const preview = document.getElementById("adjustmentPreview");
+  if (preview) {
+    const previewLevel = clampLevel(getGameLevel() + pendingAdjustment);
+    const label = pendingAdjustment === 0 ? "Aucun ajustement" : `Ajustement ${formatSigned(pendingAdjustment)}`;
+    preview.innerHTML = `${label} — niveau après validation : <strong>${formatLevel(previewLevel)}/10</strong>`;
+  }
+}
+
+function showQuizFeedback(submission) {
+  const mistakes = submission.details.filter((detail) => !detail.isCorrect);
+  let content = "";
+
+  if (mistakes.length === 0) {
+    content = `
+      <h2 id="feedbackTitle">Parfait 💜</h2>
+      <p class="perfect">Aucune faute sur cette page.</p>
+      <p><strong>${submission.reward.text}</strong></p>`;
+  } else {
+    const mistakesHtml = mistakes.map((detail) => `
+      <article style="margin-bottom:14px;padding:14px;border-radius:12px;background:var(--bad-soft);border:1px solid #f0c4cb">
+        <div style="font-weight:850;margin-bottom:9px;color:var(--ink)">${detail.prompt}</div>
+        <div style="color:var(--bad);margin-bottom:6px"><strong>Ta réponse :</strong> « ${detail.selected} »</div>
+        <div style="color:var(--good);font-weight:800"><strong>Bonne réponse :</strong> « ${detail.correct} »</div>
+      </article>`).join("");
+    content = `
+      <h2 id="feedbackTitle">À revoir avec le professeur</h2>
+      <p>${submission.score} / 3 — ${baseDeltaLabel("quiz", submission.score)}</p>
+      <div>${mistakesHtml}</div>
+      ${submission.gage ? `<p><strong>Gage :</strong> ${submission.gage}</p>` : ""}`;
   }
 
-  pageScores[submission.pageIndex] = submission.score;
-  updateIntensity(deltaLabel("quiz", submission.score, adjustment));
-  showQuizFeedback(submission, adjustment);
-  pendingContinue = () => continueAfterPage(submission.pageIndex);
+  document.getElementById("modalContent").innerHTML = `${content}${adjustmentControlsHtml()}`;
+  document.getElementById("feedbackModal").classList.add("open");
+  setLocalAdjustment(0);
 }
 
-function adjustmentHtml(adjustment) {
-  if (adjustment === 1) return `<div class="modal-delta">Bonus du professeur : +1</div>`;
-  if (adjustment === -1) return `<div class="modal-delta">Malus du professeur : −1</div>`;
-  return "";
-}
-
-function showBonusFeedback(submission, adjustment) {
+function showBonusFeedback(submission) {
   document.getElementById("modalContent").innerHTML = `
     <h2 id="feedbackTitle">💜 Bonus validé</h2>
     <p><strong>${submission.statement}</strong></p>
     <p>Ta réponse : <strong>${submission.answer ? "Vrai" : "Faux"}</strong></p>
     <div class="modal-delta">+0,5 point</div>
-    ${adjustmentHtml(adjustment)}
-    <p>Niveau actuel : <strong>${formatLevel(getGameLevel())}/10</strong></p>`;
+    ${adjustmentControlsHtml()}`;
   document.getElementById("feedbackModal").classList.add("open");
-}
-
-function showQuizFeedback(submission, adjustment) {
-  let title;
-  let text;
-  if (submission.score === 3) {
-    title = "🔥 3 de 3 — Parfait";
-    text = submission.reward.text;
-  } else if (submission.score === 2) {
-    title = "💜 2 de 3 — Très bien";
-    text = "Le niveau augmente de 0,5 point.";
-  } else if (submission.score === 1) {
-    title = "😏 1 de 3 — Encore un effort";
-    text = "Le niveau reste identique avant l’ajustement du professeur.";
-  } else {
-    title = "⏳ 0 de 3 — Gage";
-    text = "Le niveau baisse de 0,5 point.";
-  }
-
-  const reviewHtml = submission.details.map((detail) => {
-    if (detail.isCorrect) {
-      return `<li style="margin-bottom:12px;padding:11px 12px;border-radius:10px;background:var(--good-soft);color:var(--good)"><strong>Question ${detail.number} — Correct ✓</strong><br>Ta réponse : « ${detail.selected} »</li>`;
-    }
-    return `<li style="margin-bottom:12px;padding:11px 12px;border-radius:10px;background:var(--bad-soft);color:var(--bad)"><strong>Question ${detail.number} — Erreur ✗</strong><br>Ta réponse : « ${detail.selected} »<br><span style="color:var(--good);font-weight:800">Bonne réponse : « ${detail.correct} »</span></li>`;
-  }).join("");
-
-  const gageHtml = submission.gage ? `<p><strong>Gage :</strong> ${submission.gage}</p>` : "";
-  document.getElementById("modalContent").innerHTML = `
-    <h2 id="feedbackTitle">${title}</h2>
-    <p><strong>${text}</strong></p>
-    <div class="modal-delta">${deltaLabel("quiz", submission.score, 0)}</div>
-    ${adjustmentHtml(adjustment)}
-    ${gageHtml}
-    <h3>Correction de la page</h3>
-    <ul class="correction-list" style="list-style:none;padding-left:0">${reviewHtml}</ul>
-    <p>Niveau actuel : <strong>${formatLevel(getGameLevel())}/10 — ${getLevelStatus(getGameLevel())}</strong></p>`;
-  document.getElementById("feedbackModal").classList.add("open");
+  setLocalAdjustment(0);
 }
 
 function closeFeedbackAndContinue() {
   document.getElementById("feedbackModal").classList.remove("open");
+  professorAdjustments.push(pendingAdjustment);
+
+  const base = pendingSubmission ? baseDeltaValue(pendingSubmission.kind, pendingSubmission.score) : 0;
+  const total = base + pendingAdjustment;
+  const deltaText = pendingAdjustment
+    ? `${formatSigned(base)} auto · ${formatSigned(pendingAdjustment)} prof · total ${formatSigned(total)}`
+    : baseDeltaLabel(pendingSubmission.kind, pendingSubmission.score);
+
+  updateIntensity(deltaText);
+  pendingAdjustment = 0;
+  pendingSubmission = null;
+
   if (pendingContinue) {
     const continueFunction = pendingContinue;
     pendingContinue = null;
@@ -520,12 +411,15 @@ function continueAfterPage(pageIndex) {
   else if (pageIndex < pages.length - 1) {
     currentPage = pageIndex + 1;
     renderPage();
-  } else finishQuiz();
+  } else {
+    finishQuiz();
+  }
 }
 
 function continueAfterBonus(bonusIndex) {
-  if (bonusIndex === bonuses.length - 1) finishQuiz();
-  else {
+  if (bonusIndex === bonuses.length - 1) {
+    finishQuiz();
+  } else {
     currentPage = (bonusIndex + 1) * 2;
     renderPage();
   }
@@ -538,21 +432,8 @@ function finishQuiz() {
   document.getElementById("pageCounter").textContent = "Défi terminé";
   document.getElementById("progress").style.width = "100%";
   updateIntensity();
-  if (conn && conn.open) {
-    conn.send({
-      type: "finished",
-      level: getGameLevel(),
-      pageScores,
-      bonusAnswers,
-      professorAdjustments
-    });
-  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 window.addEventListener("resize", () => updateIntensity());
-const codeFromUrl = new URLSearchParams(location.search).get("code") || localStorage.getItem("defiSessionCode") || "";
-if (codeFromUrl) {
-  document.getElementById("sessionCode").value = codeFromUrl.toUpperCase();
-  setTimeout(startConnection, 250);
-}
+renderPage();
