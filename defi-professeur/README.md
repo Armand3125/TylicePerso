@@ -1,6 +1,6 @@
 # Le Défi du professeur
 
-Mini-jeu de français A1 à distance avec validation en direct par le professeur.
+Mini-jeu de français A1 pensé pour être joué en direct pendant une visio.
 
 ## Mise en ligne avec GitHub Pages
 
@@ -14,16 +14,18 @@ Dans le dépôt `Armand3125/TylicePerso` :
 
 Après publication :
 
-- Élève : `https://armand3125.github.io/TylicePerso/defi-professeur/`
-- Professeur : `https://armand3125.github.io/TylicePerso/defi-professeur/professeur.html`
+- Jeu : `https://armand3125.github.io/TylicePerso/defi-professeur/`
+- L’URL racine du dépôt redirige également vers le jeu.
 
 ## Utilisation
 
-1. Ouvrir la page `professeur.html` sur l’ordinateur du professeur.
-2. Cliquer sur **Copier le lien élève** et envoyer ce lien.
-3. Garder les deux pages ouvertes pendant la partie.
-4. Les réponses arrivent sur le tableau du professeur ; la page suivante ne se débloque qu’après validation.
+1. Ouvrir le jeu pendant la visio.
+2. Répondre aux trois questions de la page.
+3. Cliquer sur **Valider**.
+4. La correction apparaît immédiatement sur le même écran.
+5. Le professeur peut appliquer un ajustement de −1, 0 ou +1.
+6. Cliquer sur **Siguiente** pour passer à la suite.
 
 ## Fonctionnement technique
 
-Le site est statique et la synchronisation en direct utilise PeerJS/WebRTC. Les réponses ne sont pas enregistrées dans le dépôt GitHub : elles sont transmises pendant la session entre les deux navigateurs.
+Le site est entièrement statique. Il n’utilise plus de connexion PeerJS/WebRTC, de code de session ni de second appareil. Toute la partie se déroule dans une seule page du navigateur.
