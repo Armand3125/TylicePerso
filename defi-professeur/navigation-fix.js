@@ -1,73 +1,103 @@
-// Navigation robuste : descente vers « Suivant », puis retour forcé en haut après transition.
+// Navigation finale : descente vers « Suivant » puis retour réellement forcé en haut.
 
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+// Le scroll automatique question -> question reste fluide car il demande explicitement
+// behavior:"smooth". Pour les changements de page, on désactive le smooth global qui
+// provoquait des conflits dans certains navigateurs.
+document.documentElement.style.scrollBehavior = "auto";
+
+function hardScrollTop() {
+  const scrollingElement = document.scrollingElement || document.documentElement;
+  if (scrollingElement) scrollingElement.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  window.scrollTo(0, 0);
+
+  const header = document.querySelector(".app > header");
+  if (header) header.scrollIntoView({ behavior: "auto", block: "start" });
 }
 
-function forceGameTop() {
-  const goTop = () => {
-    const scrollingElement = document.scrollingElement || document.documentElement;
-    if (scrollingElement) scrollingElement.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  };
-
-  goTop();
+function lockTopAfterRender() {
+  hardScrollTop();
   requestAnimationFrame(() => {
-    goTop();
-    requestAnimationFrame(goTop);
+    hardScrollTop();
+    requestAnimationFrame(hardScrollTop);
   });
-  setTimeout(goTop, 40);
-  setTimeout(goTop, 120);
-  setTimeout(goTop, 300);
+  setTimeout(hardScrollTop, 30);
+  setTimeout(hardScrollTop, 100);
+  setTimeout(hardScrollTop, 250);
+  setTimeout(hardScrollTop, 500);
 }
 
-function scrollToNextControl() {
+function scrollToNextButton(button) {
+  if (!button) return;
+  setTimeout(() => button.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
+}
+
+function goToNextPage(pageIndex, button) {
+  if (button) button.blur();
+  // Le rendu suivant est synchrone : on navigue, puis on recale immédiatement le viewport.
+  continueAfterPage(pageIndex);
+  lockTopAfterRender();
+}
+
+function goToNextBonus(bonusIndex, button) {
+  if (button) button.blur();
+  continueAfterBonus(bonusIndex);
+  lockTopAfterRender();
+}
+
+// Remplace la création du bouton de fin de page afin que sa navigation ne dépende
+// d'aucun listener ou scroll hérité.
+renderNextButton = function (pageIndex) {
+  let footer = document.getElementById("page-next-zone");
+  if (footer) footer.remove();
+
+  footer = document.createElement("div");
+  footer.id = "page-next-zone";
+  footer.style.marginTop = "20px";
+  footer.style.display = "flex";
+  footer.style.justifyContent = "center";
+
+  const button = document.createElement("button");
+  button.className = "primary";
+  button.type = "button";
+  button.textContent = "Suivant";
+  button.onclick = () => goToNextPage(pageIndex, button);
+
+  footer.appendChild(button);
+  quiz.appendChild(footer);
+  scrollToNextButton(button);
+};
+
+// scoring-v2 crée le bouton des bonus. On garde sa logique de score puis on remplace
+// immédiatement l'action du bouton par la navigation robuste ci-dessus.
+const navigationBonusChoice = window.chooseBonusImmediate;
+window.chooseBonusImmediate = function (bonusIndex, value) {
+  const result = navigationBonusChoice.call(this, bonusIndex, value);
   const buttons = Array.from(document.querySelectorAll("#quiz button.primary"));
-  const nextButton = buttons.reverse().find((button) => button.textContent.trim() === "Suivant");
-  if (!nextButton) return;
-  setTimeout(() => nextButton.scrollIntoView({ behavior: "smooth", block: "center" }), 120);
-}
+  const button = buttons.reverse().find((item) => item.textContent.trim() === "Suivant");
+  if (button) {
+    button.type = "button";
+    button.onclick = () => goToNextBonus(bonusIndex, button);
+    scrollToNextButton(button);
+  }
+  return result;
+};
 
-// À chaque rendu d'une nouvelle page ou d'un bonus, on revient réellement en haut.
-const navigationOriginalRenderPage = renderPage;
+// Sécurité supplémentaire : tout nouveau rendu appelé par une autre partie du code
+// revient également en haut.
+const navigationRenderPage = renderPage;
 renderPage = function (...args) {
-  const result = navigationOriginalRenderPage.apply(this, args);
-  forceGameTop();
+  const result = navigationRenderPage.apply(this, args);
+  lockTopAfterRender();
   return result;
 };
 
-const navigationOriginalRenderBonus = renderBonus;
+const navigationRenderBonus = renderBonus;
 renderBonus = function (...args) {
-  const result = navigationOriginalRenderBonus.apply(this, args);
-  forceGameTop();
+  const result = navigationRenderBonus.apply(this, args);
+  lockTopAfterRender();
   return result;
 };
-
-// Quand les trois questions sont résolues, le bouton Suivant entre automatiquement dans la vue.
-const navigationOriginalRenderNextButton = renderNextButton;
-renderNextButton = function (...args) {
-  const result = navigationOriginalRenderNextButton.apply(this, args);
-  scrollToNextControl();
-  return result;
-};
-
-// Même comportement pour les bonus Vrai/Faux.
-const navigationOriginalChooseBonusImmediate = window.chooseBonusImmediate;
-window.chooseBonusImmediate = function (...args) {
-  const result = navigationOriginalChooseBonusImmediate.apply(this, args);
-  scrollToNextControl();
-  return result;
-};
-
-// Filet de sécurité : après n'importe quel clic sur « Suivant », on force le haut
-// une fois le rendu suivant effectué et après que le bouton ait perdu le focus.
-document.addEventListener("click", (event) => {
-  const button = event.target.closest("button");
-  if (!button || button.textContent.trim() !== "Suivant") return;
-  button.blur();
-  setTimeout(forceGameTop, 0);
-  setTimeout(forceGameTop, 80);
-  setTimeout(forceGameTop, 220);
-});
