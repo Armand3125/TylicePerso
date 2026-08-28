@@ -1,8 +1,8 @@
-// V5 : niveaux pédagogiques + malus immédiat de 0,25 par mauvaise réponse.
+// V6 : niveaux pédagogiques + malus immédiat de 0,25 par mauvaise réponse.
 
 function levelForPageIndex(pageIndex) {
-  if (pageIndex < 5) return "A1";
-  if (pageIndex < 10) return "A2";
+  if (pageIndex < 8) return "A1";
+  if (pageIndex < 16) return "A2";
   return "B1";
 }
 
@@ -10,7 +10,7 @@ pages.forEach((page, pageIndex) => {
   page.level = levelForPageIndex(pageIndex);
 });
 
-// Le niveau de jeu tient désormais compte de chaque clic faux, pas seulement du score final de la page.
+// Le niveau de jeu tient compte de chaque clic faux, pas seulement du score final de la page.
 getGameLevel = function () {
   let level = 1;
 
