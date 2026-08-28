@@ -1,71 +1,71 @@
-// Première partie V3 : plus légère, centrée couple, conversation et flirt doux.
+// Progression V4 : pages 1-2 mignonnes, 3-5 couple, 6-7 hot.
 
 pages[0] = {
-  title: "Página 1 — Nuestra videollamada",
-  intro: "Nuevas frases sencillas para empezar una conversación en vídeo.",
+  title: "Página 1 — Petits mots doux",
+  intro: "Commencer avec des phrases tendres et simples.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "1. Ce soir, je ___ très contente de te voir.", options: ["suis", "es", "ai"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "2. « Te espero a las nueve. »", options: ["Je te regarde à neuf heures.", "Je t’attends à neuf heures.", "Je dors à neuf heures."], answer: 1 },
-    { instruction: "Completa la frase.", prompt: "3. Quand la caméra s’allume, tu me ___.", options: ["souris", "sourit", "souriez"], answer: 0 }
+    { instruction: "Completa la frase.", prompt: "1. Je suis très ___ de te voir ce soir.", options: ["contente", "contentes", "contente de la"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "2. « Me haces sonreír. »", options: ["Tu me fais sourire.", "Tu me fais dormir.", "Tu me souris demain."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "3. J’aime entendre ta ___ avant de dormir.", options: ["voix", "parler", "regarde"], answer: 0 }
   ]
 };
 
 pages[1] = {
-  title: "Página 2 — Mensajes entre nosotros",
-  intro: "Hablar de los pequeños mensajes que nos enviamos.",
+  title: "Página 2 — Tu me manques",
+  intro: "Parler de tendresse et de la distance.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "4. Je t’envoie ___ message avant de dormir.", options: ["une", "un", "des la"], answer: 1 },
-    { instruction: "Completa la frase.", prompt: "5. Tu me ___ souvent rire.", options: ["fais", "fait", "faisons"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "6. « Tengo ganas de verte. »", options: ["J’ai envie de te voir.", "Je dois te voir hier.", "Je suis envie de toi voir."], answer: 0 }
+    { instruction: "Completa la frase.", prompt: "4. Quand tu es loin, tu me ___.", options: ["manques", "manque", "manquez"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "5. « Quiero darte un abrazo. »", options: ["Je veux te faire un câlin.", "Je veux te faire attendre.", "Je veux partir sans toi."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "6. Je pense souvent ___ toi.", options: ["à", "de", "chez"], answer: 0 }
   ]
 };
 
 pages[2] = {
-  title: "Página 3 — Être proche",
-  intro: "Parler de complicité et de petits gestes affectueux.",
+  title: "Página 3 — Notre quotidien",
+  intro: "Parler de la vie de couple et des petites habitudes.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "7. J’aime être ___ de toi.", options: ["près", "loin", "derrière de"], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "8. Je pose ma tête ___ ton épaule.", options: ["sur", "chez", "avec"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "9. « Ven más cerca. »", options: ["Éloigne-toi.", "Viens plus près.", "Pars demain."], answer: 1 }
+    { instruction: "Completa la frase.", prompt: "7. Le week-end, nous ___ souvent ensemble.", options: ["cuisinons", "cuisine", "cuisinez"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "8. « Te escribo cuando llego a casa. »", options: ["Je t’écris quand j’arrive à la maison.", "Je t’appelle hier maison.", "J’écris toi quand maison."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "9. On choisit le film ___ ?", options: ["ensemble", "ensembles", "avec ensemble"], answer: 0 }
   ]
 };
 
 pages[3] = {
-  title: "Página 4 — Compliments",
-  intro: "Faire des compliments et comprendre des phrases de flirt léger.",
+  title: "Página 4 — Organiser une soirée",
+  intro: "Décider ensemble et exprimer ses préférences.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "10. Quand tu souris comme ça, tu me ___ de bonne humeur.", options: ["mets", "met", "mettre"], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "11. J’aime ___ tu me regardes en souriant.", options: ["quand", "de que", "où de"], answer: 0 },
-    { instruction: "Elige la frase correcta.", prompt: "12. ¿Cómo se dice « Estás muy guapa esta noche »?", options: ["Tu as belle ce soir.", "Tu es très belle ce soir.", "Tu fais belle hier soir."], answer: 1 }
+    { instruction: "Completa la frase.", prompt: "10. Tu préfères sortir ___ rester à la maison ?", options: ["ou", "où", "mais de"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "11. « Como tú quieras. »", options: ["Comme tu veux.", "Comment tu veux être.", "Comme tu vas hier."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "12. Après le dîner, on ___ regarder une série.", options: ["peut", "peux", "pouvons de"], answer: 0 }
   ]
 };
 
 pages[4] = {
-  title: "Página 5 — Tendresse",
-  intro: "Vocabulaire simple pour parler de gestes tendres.",
+  title: "Página 5 — Flirt en couple",
+  intro: "Faire des compliments et jouer un peu avec la séduction.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "13. J’aime te prendre dans mes ___.", options: ["bras", "mains de", "yeux"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "14. « Dame un abrazo. »", options: ["Fais-moi un câlin.", "Regarde mon téléphone.", "Ferme la fenêtre."], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "15. Tu me ___ beaucoup quand tu es loin.", options: ["manques", "manque", "manquez"], answer: 0 }
+    { instruction: "Completa la frase.", prompt: "13. Cette tenue te va très ___.", options: ["bien", "bonne", "beau"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "14. « Me encanta cuando me miras así. »", options: ["J’adore quand tu me regardes comme ça.", "J’adore quand tu pars comme ça.", "Je regarde toi comme adore."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "15. Quand tu me fais ce sourire, je ___.", options: ["rougis", "rougit", "rougir de"], answer: 0 }
   ]
 };
 
 pages[5] = {
-  title: "Página 6 — Dire ce qu’on préfère",
-  intro: "Exprimer des préférences simples dans une relation.",
+  title: "Página 6 — La tension monte",
+  intro: "On passe à un flirt plus chaud, sans être encore trop explicite.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "16. Je préfère ___ rester à la maison ce soir.", options: ["de", "que de", "à de"], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "17. Tu veux regarder un film ___ écouter de la musique ?", options: ["ou", "où", "et de"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "18. « Como tú quieras. »", options: ["Comme tu veux.", "Comment tu va.", "Comme hier veux."], answer: 0 }
+    { instruction: "Completa la frase.", prompt: "16. J’ai très envie de t’___.", options: ["embrasser", "embrasses", "embrassé"], answer: 0 },
+    { instruction: "Elige la traducción correcta.", prompt: "17. « Acércate un poco más. »", options: ["Approche-toi encore un peu.", "Éloigne-toi encore un peu.", "Attends-moi demain."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "18. Quand tu m’embrasses dans le cou, ça me ___ frissonner.", options: ["fait", "fais", "faire"], answer: 0 }
   ]
 };
 
 pages[6] = {
-  title: "Página 7 — Confiance",
-  intro: "Comprendre des phrases simples sur la confiance et la communication.",
+  title: "Página 7 — Plus près",
+  intro: "Comprendre des phrases sensuelles et dire ce qu’on aime.",
   questions: [
-    { instruction: "Completa la frase.", prompt: "19. Tu peux me ___ la vérité.", options: ["dire", "dis", "dit"], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "20. Si quelque chose te dérange, tu peux m’en ___.", options: ["parler", "parles", "parlé"], answer: 0 },
-    { instruction: "Elige la traducción correcta.", prompt: "21. « Estoy de acuerdo contigo. »", options: ["Je suis d’accord avec toi.", "J’ai accord toi.", "Je fais avec toi accord."], answer: 0 }
+    { instruction: "Elige la traducción correcta.", prompt: "19. « Me gusta sentir tus manos sobre mí. »", options: ["J’aime sentir tes mains sur moi.", "J’aime voir tes mains demain.", "Je sens toi avec les mains."], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "20. Ne t’arrête ___ maintenant.", options: ["pas", "rien", "jamais de"], answer: 0 },
+    { instruction: "Elige la frase correcta.", prompt: "21. Pour demander de ralentir :", options: ["Plus doucement, s’il te plaît.", "Plus demain, s’il te plaît.", "Moins près hier."], answer: 0 }
   ]
 };
