@@ -1,4 +1,4 @@
-// Mode visio : correction immédiate, une seconde chance, puis bouton Suivant.
+// Mode visio : correction réellement immédiate, question par question.
 
 // Cinq bonus supplémentaires pour la seconde moitié du jeu.
 bonuses.push(
@@ -17,6 +17,7 @@ function pageState(pageIndex) {
       attempts: [0, 0, 0],
       resolved: [false, false, false],
       firstCorrect: [false, false, false],
+      awardedScore: 0,
       finished: false
     };
   }
@@ -51,21 +52,22 @@ function lockQuestion(localIndex) {
   });
 }
 
-function removeTryAgain(localIndex) {
-  const old = document.getElementById(`try-again-${localIndex}`);
+function removeQuestionNote(localIndex) {
+  const old = document.getElementById(`question-note-${localIndex}`);
   if (old) old.remove();
 }
 
-function showTryAgain(localIndex) {
-  removeTryAgain(localIndex);
+function showQuestionNote(localIndex, text, kind) {
+  removeQuestionNote(localIndex);
   const block = document.getElementById(`question-${localIndex}`);
   if (!block) return;
+
   const note = document.createElement("div");
-  note.id = `try-again-${localIndex}`;
-  note.textContent = "Essaie encore — une deuxième chance 💜";
+  note.id = `question-note-${localIndex}`;
+  note.textContent = text;
   note.style.marginTop = "9px";
-  note.style.color = "#b52d42";
-  note.style.fontWeight = "800";
+  note.style.fontWeight = "850";
+  note.style.color = kind === "good" ? "#187847" : "#b52d42";
   block.appendChild(note);
 }
 
@@ -74,26 +76,44 @@ function showCorrectAnswer(localIndex, correctIndex) {
   paintOption(label, "good");
 }
 
-function renderNextButton(pageIndex, score) {
+function scrollToNextQuestion(localIndex) {
+  const next = document.getElementById(`question-${localIndex + 1}`);
+  if (next) {
+    setTimeout(() => next.scrollIntoView({ behavior: "smooth", block: "center" }), 300);
+  }
+}
+
+function updateLivePageScore(pageIndex) {
+  const state = pageState(pageIndex);
+  const firstTryCorrect = state.firstCorrect.filter(Boolean).length;
+
+  // Le barème final reste identique : 0/1 = 0, 2 = +0,5, 3 = +1.
+  // On crédite cependant la jauge dès que le seuil est atteint.
+  let scoreForMeter = 0;
+  if (firstTryCorrect >= 3) scoreForMeter = 3;
+  else if (firstTryCorrect >= 2) scoreForMeter = 2;
+
+  if (scoreForMeter === state.awardedScore) return;
+
+  const previous = state.awardedScore;
+  state.awardedScore = scoreForMeter;
+  pageScores[pageIndex] = scoreForMeter;
+
+  const previousDelta = previous === 3 ? 1 : previous === 2 ? 0.5 : 0;
+  const newDelta = scoreForMeter === 3 ? 1 : scoreForMeter === 2 ? 0.5 : 0;
+  const gained = newDelta - previousDelta;
+  updateIntensity(gained > 0 ? `+${formatLevel(gained)} point` : "");
+}
+
+function renderNextButton(pageIndex) {
   let footer = document.getElementById("page-next-zone");
   if (footer) footer.remove();
 
   footer = document.createElement("div");
   footer.id = "page-next-zone";
-  footer.style.marginTop = "22px";
+  footer.style.marginTop = "20px";
   footer.style.display = "flex";
-  footer.style.flexDirection = "column";
-  footer.style.alignItems = "center";
-  footer.style.gap = "12px";
-
-  if (score === 3) {
-    const perfect = document.createElement("div");
-    perfect.textContent = "Parfait 💜";
-    perfect.style.color = "#187847";
-    perfect.style.fontSize = "1.2rem";
-    perfect.style.fontWeight = "900";
-    footer.appendChild(perfect);
-  }
+  footer.style.justifyContent = "center";
 
   const button = document.createElement("button");
   button.className = "primary";
@@ -101,7 +121,6 @@ function renderNextButton(pageIndex, score) {
   button.onclick = () => continueAfterPage(pageIndex);
   footer.appendChild(button);
   quiz.appendChild(footer);
-  footer.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function finalizeImmediatePage(pageIndex) {
@@ -109,10 +128,10 @@ function finalizeImmediatePage(pageIndex) {
   if (state.finished || !state.resolved.every(Boolean)) return;
   state.finished = true;
 
-  const score = state.firstCorrect.filter(Boolean).length;
-  pageScores[pageIndex] = score;
-  updateIntensity(deltaLabel("quiz", score));
-  renderNextButton(pageIndex, score);
+  const firstTryCorrect = state.firstCorrect.filter(Boolean).length;
+  pageScores[pageIndex] = firstTryCorrect;
+  updateIntensity();
+  renderNextButton(pageIndex);
 }
 
 window.chooseImmediateAnswer = function (localIndex, optionIndex) {
@@ -128,28 +147,39 @@ window.chooseImmediateAnswer = function (localIndex, optionIndex) {
   answers[globalIndex] = optionIndex;
   state.attempts[localIndex] += 1;
 
+  // Bonne réponse : retour vert immédiatement, sans attendre aucune autre question.
   if (optionIndex === question.answer) {
-    if (state.attempts[localIndex] === 1) state.firstCorrect[localIndex] = true;
+    const firstTry = state.attempts[localIndex] === 1;
+    if (firstTry) state.firstCorrect[localIndex] = true;
+
     paintOption(label, "good");
-    removeTryAgain(localIndex);
+    showQuestionNote(localIndex, firstTry ? "Correct ✓" : "Correct ✓ — deuxième tentative", "good");
     state.resolved[localIndex] = true;
     lockQuestion(localIndex);
+    updateLivePageScore(pageIndex);
+
+    if (localIndex < 2) scrollToNextQuestion(localIndex);
     finalizeImmediatePage(pageIndex);
     return;
   }
 
+  // Mauvaise réponse : rouge immédiatement et deuxième chance sur place.
   paintOption(label, "bad");
   if (input) input.disabled = true;
 
   if (state.attempts[localIndex] === 1) {
-    showTryAgain(localIndex);
+    showQuestionNote(localIndex, "Incorrect ✗ — essaie encore", "bad");
     return;
   }
 
-  removeTryAgain(localIndex);
+  // Deuxième erreur : on révèle la bonne réponse directement dans cette question.
   showCorrectAnswer(localIndex, question.answer);
+  showQuestionNote(localIndex, `Bonne réponse : ${question.options[question.answer]}`, "good");
   state.resolved[localIndex] = true;
   lockQuestion(localIndex);
+  updateLivePageScore(pageIndex);
+
+  if (localIndex < 2) scrollToNextQuestion(localIndex);
   finalizeImmediatePage(pageIndex);
 };
 
@@ -163,7 +193,7 @@ renderPage = function () {
   page.questions.forEach((question, localIndex) => {
     html += `<div class="question" id="question-${localIndex}"><div class="instruction">${question.instruction}</div><div class="prompt">${question.prompt}</div>`;
     question.options.forEach((option, optionIndex) => {
-      html += `<label class="option" id="option-${localIndex}-${optionIndex}"><input id="input-${localIndex}-${optionIndex}" type="radio" name="q${currentPage}-${localIndex}" value="${optionIndex}" onclick="chooseImmediateAnswer(${localIndex},${optionIndex})"><span>${String.fromCharCode(65 + optionIndex)}. ${option}</span></label>`;
+      html += `<label class="option" id="option-${localIndex}-${optionIndex}"><input id="input-${localIndex}-${optionIndex}" type="radio" name="q${currentPage}-${localIndex}" value="${optionIndex}" onchange="chooseImmediateAnswer(${localIndex},${optionIndex})"><span>${String.fromCharCode(65 + optionIndex)}. ${option}</span></label>`;
     });
     html += `</div>`;
   });
@@ -173,8 +203,7 @@ renderPage = function () {
   updateProgress(quizStepIndex(currentPage), `Página ${currentPage + 1} de ${pages.length}`);
   updateIntensity();
 
-  // Une page déjà terminée n'est normalement jamais réaffichée, mais on garde un rendu cohérent si cela arrive.
-  if (state.finished) renderNextButton(currentPage, state.firstCorrect.filter(Boolean).length);
+  if (state.finished) renderNextButton(currentPage);
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
@@ -191,7 +220,7 @@ window.chooseBonusImmediate = function (bonusIndex, value) {
   paintOption(chosen, "good");
 
   const footer = document.createElement("div");
-  footer.style.marginTop = "22px";
+  footer.style.marginTop = "20px";
   footer.style.display = "flex";
   footer.style.justifyContent = "center";
   const button = document.createElement("button");
@@ -200,7 +229,6 @@ window.chooseBonusImmediate = function (bonusIndex, value) {
   button.onclick = () => continueAfterBonus(bonusIndex);
   footer.appendChild(button);
   quiz.appendChild(footer);
-  footer.scrollIntoView({ behavior: "smooth", block: "nearest" });
 };
 
 renderBonus = function (bonusIndex) {
@@ -213,8 +241,8 @@ renderBonus = function (bonusIndex) {
       <div class="bonus-question">
         <div class="bonus-fr">${bonuses[bonusIndex]}</div>
         <p class="bonus-points">Réponse : +0,5 point</p>
-        <label class="option" id="bonus-${bonusIndex}-true"><input type="radio" name="bonus${bonusIndex}" onclick="chooseBonusImmediate(${bonusIndex},true)"><span>Vrai</span></label>
-        <label class="option" id="bonus-${bonusIndex}-false"><input type="radio" name="bonus${bonusIndex}" onclick="chooseBonusImmediate(${bonusIndex},false)"><span>Faux</span></label>
+        <label class="option" id="bonus-${bonusIndex}-true"><input type="radio" name="bonus${bonusIndex}" onchange="chooseBonusImmediate(${bonusIndex},true)"><span>Vrai</span></label>
+        <label class="option" id="bonus-${bonusIndex}-false"><input type="radio" name="bonus${bonusIndex}" onchange="chooseBonusImmediate(${bonusIndex},false)"><span>Faux</span></label>
       </div>
     </div>`;
   updateProgress(bonusStepIndex(bonusIndex), `Bonus ${bonusIndex + 1} sur ${bonuses.length}`);
