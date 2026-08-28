@@ -9,6 +9,19 @@ bonuses.push(
   "Quand on se retrouvera, j’aimerais te dire exactement comment me faire jouir."
 );
 
+const bonusTranslations = [
+  "Me gusta cuando decides cuándo puedo tocarme.",
+  "Me gusta cuando me das órdenes.",
+  "Me gustaría darte órdenes.",
+  "Me gusta que me ates.",
+  "Quiero sentarme en tu cara.",
+  "Me gustaría que me miraras tocarme durante nuestra videollamada.",
+  "Quiero que me digas exactamente dónde y cómo tocarme.",
+  "Me gustaría mostrarme desnuda ante la cámara mientras me das órdenes.",
+  "Quiero que me hagas esperar antes de dejarme llegar al orgasmo.",
+  "Cuando volvamos a vernos, me gustaría decirte exactamente cómo hacerme llegar al orgasmo."
+];
+
 const immediateStates = {};
 
 function pageState(pageIndex) {
@@ -233,6 +246,7 @@ window.chooseBonusImmediate = function (bonusIndex, value) {
 
 renderBonus = function (bonusIndex) {
   activeBonus = bonusIndex;
+  const translation = bonusTranslations[bonusIndex] || "";
   quiz.innerHTML = `
     <div class="bonus-page" id="bonus-page-${bonusIndex}">
       <span class="bonus-chip">Bonus intime ${bonusIndex + 1} / ${bonuses.length}</span>
@@ -240,6 +254,7 @@ renderBonus = function (bonusIndex) {
       <p class="page-intro">Réponds simplement et honnêtement.</p>
       <div class="bonus-question">
         <div class="bonus-fr">${bonuses[bonusIndex]}</div>
+        <div style="margin-top:7px;color:#8a818b;font-size:.88rem;line-height:1.4;font-weight:500">${translation}</div>
         <p class="bonus-points">Réponse : +0,5 point</p>
         <label class="option" id="bonus-${bonusIndex}-true"><input type="radio" name="bonus${bonusIndex}" onchange="chooseBonusImmediate(${bonusIndex},true)"><span>Vrai</span></label>
         <label class="option" id="bonus-${bonusIndex}-false"><input type="radio" name="bonus${bonusIndex}" onchange="chooseBonusImmediate(${bonusIndex},false)"><span>Faux</span></label>
