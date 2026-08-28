@@ -5,7 +5,7 @@ pages[7] = {
   intro: "La tension devient plus sensuelle et plus directe.",
   questions: [
     { instruction: "Elige la traducción correcta.", prompt: "22. « Estás muy sexy esta noche. »", options: ["Tu es très sexy ce soir.", "Tu es très fatiguée ce soir.", "Tu as sexy demain."], answer: 0 },
-    { instruction: "Completa la frase.", prompt: "23. J’aime quand tu me regardes ___ longtemps.", options: ["aussi", "comme", "très de"], answer: 0 },
+    { instruction: "Completa la frase.", prompt: "23. J’aime quand tu me regardes aussi ___.", options: ["intensément", "intense", "intensité"], answer: 0 },
     { instruction: "Elige la traducción correcta.", prompt: "24. « Quiero besarte lentamente. »", options: ["Je veux t’embrasser lentement.", "Je veux te parler demain.", "Je veux lentement toi."], answer: 0 }
   ]
 };
