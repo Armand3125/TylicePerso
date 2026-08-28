@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>Le Défi du professeur</title>
-  <link rel="stylesheet" href="style.css?v=20260828e" />
+  <link rel="stylesheet" href="style.css?v=20260828f" />
 </head>
 <body>
   <main class="layout" id="gameShell">
@@ -82,7 +82,31 @@
     </aside>
   </main>
 
-  <script src="app.js?v=20260828e"></script>
-  <script src="live-patch.js?v=20260828e"></script>
+  <script src="app.js?v=20260828f"></script>
+  <script src="live-patch.js?v=20260828f"></script>
+  <script>
+    function forceTopAfterTransition() {
+      const goTop = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      };
+      goTop();
+      requestAnimationFrame(goTop);
+      setTimeout(goTop, 80);
+    }
+
+    const originalContinueAfterPage = continueAfterPage;
+    continueAfterPage = function (pageIndex) {
+      originalContinueAfterPage(pageIndex);
+      forceTopAfterTransition();
+    };
+
+    const originalContinueAfterBonus = continueAfterBonus;
+    continueAfterBonus = function (bonusIndex) {
+      originalContinueAfterBonus(bonusIndex);
+      forceTopAfterTransition();
+    };
+  </script>
 </body>
 </html>
